@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// необходимо чтобы название скрипта и название класса совпадали
 public class CustomCharacterController : MonoBehaviour
 {
     // public Animator anim;
@@ -43,6 +42,7 @@ public class CustomCharacterController : MonoBehaviour
 
         currentSpeed = Mathf.Lerp(currentSpeed, walkingSpeed, Time.deltaTime * 3);
     }
+
     private void Update()
     {
         horizontal = Mathf.Lerp(horizontal, fixedJoystick.Horizontal, Time.deltaTime * lerpMultiplier);
@@ -76,24 +76,23 @@ public class CustomCharacterController : MonoBehaviour
         //    anim.SetTrigger("Jump");
         //}
     }
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         // Здесь мы задаем движение персонажа в зависимости от направления в которое смотрит камера
         // Сохраняем направление вперед и вправо от камеры 
         Vector3 camF = mainCamera.forward;
         Vector3 camR = mainCamera.right;
-        // Чтобы направления вперед и вправо не зависили от того смотрит ли камера вверх или вниз, иначе когда мы смотрим вперед, персонаж будет идти быстрее чем когда смотрит вверх или вниз
-        // Можете сами проверить что будет убрав camF.y = 0 и camR.y = 0 :)
+        // Чтобы направления вперед и вправо не зависили от того, смотрит ли камера вверх или вниз, иначе когда мы смотрим вперед, персонаж будет идти быстрее, чем когда смотрит вверх или вниз
         camF.y = 0;
         camR.y = 0;
         Vector3 movingVector;
         // Тут мы умножаем наше нажатие на кнопки W & S на направление камеры вперед и прибавляем к нажатиям на кнопки A & D и умножаем на направление камеры вправо
         movingVector = Vector3.ClampMagnitude(camF.normalized * vertical * currentSpeed + camR.normalized * horizontal * currentSpeed, currentSpeed);
-        // Magnitude - это длинна вектора. я делю длинну на currentSpeed так как мы умножаем этот вектор на currentSpeed на 86 строке. Я хочу получить число максимум 1.
+        // Magnitude - это длина вектора. я делю длинну на currentSpeed так как мы умножаем этот вектор на currentSpeed на 86 строке. Я хочу получить число максимум 1.
         //anim.SetFloat("magnitude", movingVector.magnitude / currentSpeed);
-        Debug.Log(movingVector.magnitude / currentSpeed);
-        // Здесь мы двигаем персонажа! Устанавливаем движение только по x & z потому что мы не хотим чтобы наш персонаж взлетал в воздух
+        //Debug.Log(movingVector.magnitude / currentSpeed);
+        // Здесь мы двигаем персонажа! Устанавливаем движение только по x & z, потому что мы не хотим чтобы наш персонаж взлетал в воздух
         rig.velocity = new Vector3(movingVector.x, rig.velocity.y, movingVector.z);
         // У меня был баг, что персонаж крутился на месте и это исправил с помощью этой строки
         rig.angularVelocity = Vector3.zero;

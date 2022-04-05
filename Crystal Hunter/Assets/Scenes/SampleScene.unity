@@ -907,6 +907,8 @@ GameObject:
   - component: {fileID: 1830927958}
   - component: {fileID: 1830927957}
   - component: {fileID: 1830927962}
+  - component: {fileID: 1830927964}
+  - component: {fileID: 1830927963}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1029,6 +1031,31 @@ MonoBehaviour:
   horizontal: 0
   vertical: 0
   lerpMultiplier: 7
+--- !u!114 &1830927963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830927956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace80e8ea0e0f1140950c5d2863b1e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1830927964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830927956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad202a4b1bc6e64d82c5248554f4b84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scor: 0
 --- !u!1 &1964551980
 GameObject:
   m_ObjectHideFlags: 0

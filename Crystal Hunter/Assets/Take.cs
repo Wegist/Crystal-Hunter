@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Take : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+void OnMouseDown()
     {
-        Destroy(gameObject);
+      
+            Destroy(gameObject);
+    
     }
+
+
 }
 
 

@@ -15,7 +15,7 @@ public class CameraControllerPanel : MonoBehaviour, IPointerDownHandler, IPointe
     private void Start()
     {
         if (isMobile)
-        // В мобильной версии мы не хотим, чтобы мышь могла управляла камерой, поэтому делаем так, чтобы Mouse Y и Mouse X не учитывались
+        // В мобильной версии мы не хотим, чтобы мышь могла управлять камерой, поэтому делаем так, чтобы Mouse Y и Mouse X не учитывались
         {
             CVC.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = sensitivity;
             CVC.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = sensitivity;

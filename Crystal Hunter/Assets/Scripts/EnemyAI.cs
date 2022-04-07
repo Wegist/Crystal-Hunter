@@ -1,26 +1,31 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    private Transform Player;
+    private Transform human;
     private UnityEngine.AI.NavMeshAgent NMA;
     public float speed;
 
     void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        human = GameObject.FindGameObjectWithTag("Human").transform;
         NMA = (UnityEngine.AI.NavMeshAgent)this.GetComponent("NavMeshAgent");
         NMA.speed = speed;
     }
 
     void Update()
     {
-        NMA.SetDestination(Player.position);
+        NMA.SetDestination(human.position);
     }
 
-    void OnTriggerEnter(Collider Player)
+    void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Game over");
+        if (other.tag == "Human")
+        {
+            Debug.Log("Game over");
+        }
     }
 }

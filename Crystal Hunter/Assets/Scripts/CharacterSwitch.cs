@@ -10,8 +10,9 @@ public class CharacterSwitch : MonoBehaviour
     private Monster monster;
     public CinemachineVirtualCamera CVC;
     public float timeStart = 15;
+    private float timeLeft;
     public Text timerText;
-    private bool timerRunning = false;
+    public static bool timerRunning = false;
     private float monsterRotationX;
     private float monsterRotationY;
     private float humanRotationY;
@@ -23,26 +24,26 @@ public class CharacterSwitch : MonoBehaviour
         // Отображение секунд таймера в виде текста
         timerText.text = timeStart.ToString();
     }
-
-    void OnMouseDown()
+    // Тап по кристаллу запускает переключение между персонажами
+    void OnTriggerEnter(Collider other)
     {
-        // Тап по кристаллу запускает переключение между персонажами
-        Debug.Log("Подняли кристалл");
-        // Считываем угол поворота монстра
-        monsterRotationX = monster.transform.rotation.eulerAngles.x; 
-        monsterRotationY = monster.transform.rotation.eulerAngles.y;
-        // Здесь мы выключаем скрипт управления персонажем у человека. Далее вызываем функцию, которая выключает ии и навигацию у монстра, и влючает скрипт управления персонажем. Затем вешаем камеру на монстра
-        human.enabled = false;
-        monster.SwitchTo();
-        CVC.Follow = monster.transform;
-        // Передаем поворот монстра камере, чтобы он смотрел туда же, куда и до переключения
-        CVC.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = monsterRotationX;
-        CVC.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = monsterRotationY;
-        // Запускаем таймер
-        timerRunning = true;
-        timerText.enabled = true;
-        // Скрываем кристалл
-        this.GetComponent<Renderer>().enabled = false;
+        if (other.CompareTag("Crystal"))
+        {
+            timeLeft = timeStart;
+            // Считываем угол поворота монстра
+            monsterRotationX = monster.transform.rotation.eulerAngles.x;
+            monsterRotationY = monster.transform.rotation.eulerAngles.y;
+            // Здесь мы выключаем скрипт управления персонажем у человека. Далее вызываем функцию, которая выключает ии и навигацию у монстра, и влючает скрипт управления персонажем. Затем вешаем камеру на монстра
+            human.enabled = false;
+            monster.SwitchTo();
+            CVC.Follow = monster.transform;
+            // Передаем поворот монстра камере, чтобы он смотрел туда же, куда и до переключения
+            CVC.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = monsterRotationX;
+            CVC.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = monsterRotationY;
+            // Запускаем таймер
+            timerRunning = true;
+            timerText.enabled = true;
+        }
     }
 
     void Update()
@@ -51,11 +52,11 @@ public class CharacterSwitch : MonoBehaviour
         if (timerRunning == true)
         {
             // Если время не истекло, то вычисляем оставшееся время
-            if (timeStart > 0)
+            if (timeLeft > 0)
             {
                 // Отнимаем одну единицу в секунду и выводим в текст
-                timeStart -= Time.deltaTime;
-                timerText.text = Mathf.Round(timeStart).ToString();
+                timeLeft -= Time.deltaTime;
+                timerText.text = Mathf.Round(timeLeft).ToString();
             }
             else
             {

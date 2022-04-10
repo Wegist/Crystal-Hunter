@@ -11,8 +11,8 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        human = GameObject.FindGameObjectWithTag("Human").transform;
-        NMA = (UnityEngine.AI.NavMeshAgent)this.GetComponent("NavMeshAgent");
+        human = GM.Instance.human.transform;
+        NMA = GetComponent<NavMeshAgent>();
         NMA.speed = speed;
     }
 
@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Human")
+        if (other.CompareTag("Human"))
         {
             Debug.Log("Game over");
         }

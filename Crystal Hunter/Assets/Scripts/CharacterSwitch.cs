@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class CharacterSwitch : MonoBehaviour
 {
-    private GameObject human;
-    private GameObject monster;
+    private CustomCharacterController human;
+    private Monster monster;
     public CinemachineVirtualCamera CVC;
     public float timeStart = 15;
     public Text timerText;
@@ -18,8 +18,8 @@ public class CharacterSwitch : MonoBehaviour
 
     void Start()
     {
-        human = GameObject.FindGameObjectWithTag("Human");
-        monster = GameObject.FindGameObjectWithTag("Monster");
+        human = GM.Instance.human;
+        monster = GM.Instance.monster;
         // Отображение секунд таймера в виде текста
         timerText.text = timeStart.ToString();
     }
@@ -31,11 +31,9 @@ public class CharacterSwitch : MonoBehaviour
         // Считываем угол поворота монстра
         monsterRotationX = monster.transform.rotation.eulerAngles.x; 
         monsterRotationY = monster.transform.rotation.eulerAngles.y;
-        // Здесь мы выключаем скрипт управления персонажем у человека и включаем его у монстра. Также выключаем ИИ монстра и его навигацию, затем вешаем камеру на монстра
-        human.GetComponent<CustomCharacterController>().enabled = false;
-        monster.GetComponent<CustomCharacterController>().enabled = true;
-        monster.GetComponent<EnemyAI>().enabled = false;
-        monster.GetComponent<NavMeshAgent>().isStopped = true;
+        // Здесь мы выключаем скрипт управления персонажем у человека. Далее вызываем функцию, которая выключает ии и навигацию у монстра, и влючает скрипт управления персонажем. Затем вешаем камеру на монстра
+        human.enabled = false;
+        monster.SwitchTo();
         CVC.Follow = monster.transform;
         // Передаем поворот монстра камере, чтобы он смотрел туда же, куда и до переключения
         CVC.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = monsterRotationX;
@@ -66,10 +64,10 @@ public class CharacterSwitch : MonoBehaviour
                 // Получаем угол поворота человека
                 humanRotationY = human.transform.rotation.eulerAngles.y;
                 // Возвращаем все компоненты и камеру на место
-                human.GetComponent<CustomCharacterController>().enabled = true;
-                monster.GetComponent<CustomCharacterController>().enabled = false;
-                monster.GetComponent<EnemyAI>().enabled = true;
-                monster.GetComponent<NavMeshAgent>().isStopped = false;
+                human.enabled = true;
+                monster.cc.enabled = false;
+                monster.ai.enabled = true;
+                monster.agent.isStopped = false;
                 CVC.Follow = human.transform;
 
                 CVC.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;

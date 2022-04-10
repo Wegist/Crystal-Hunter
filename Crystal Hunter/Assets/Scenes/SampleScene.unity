@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 304855263}
   - component: {fileID: 304855261}
   - component: {fileID: 304855262}
+  - component: {fileID: 304855264}
   - component: {fileID: 304855260}
   m_Layer: 0
   m_Name: Monster
@@ -593,6 +594,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &304855264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304855255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f687b921ec4e348bcbeed188fd5389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cc: {fileID: 304855262}
+  agent: {fileID: 304855260}
+  ai: {fileID: 304855261}
 --- !u!1 &323491414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,6 +1548,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1638,6 +1655,20 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f2f29ef0d8f3f44b141675569863a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  human: {fileID: 1830927962}
+  monster: {fileID: 304855264}
 --- !u!1 &1082385975
 GameObject:
   m_ObjectHideFlags: 0

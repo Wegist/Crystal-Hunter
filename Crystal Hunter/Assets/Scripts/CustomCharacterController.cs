@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomCharacterController : MonoBehaviour
 {
@@ -12,15 +13,60 @@ public class CustomCharacterController : MonoBehaviour
     public float horizontal;
     public float vertical;
     public float lerpMultiplier = 7f;
+    public Slider staminaSlider;
+    public float staminaValue;
+    public float staminaMinValue;
+    public float staminaMaxValue;
+    public float staminaReturn;
+    private float speed;
+    public float runningSpeed;
+    private bool runButtonClicked = false;
+    public Button runButton;
+    public static bool timerRunning;
 
     void Start()
     {
-
+        timerRunning = CharacterSwitch.timerRunning;
+        staminaSlider.gameObject.SetActive(false);
     }
 
     void Walk()
     {
         currentSpeed = Mathf.Lerp(currentSpeed, walkingSpeed, Time.deltaTime * 3);
+        staminaValue += staminaReturn * Time.deltaTime;
+    }
+
+    void Run()
+    {
+        if (staminaValue > staminaMinValue)
+        {
+            staminaSlider.gameObject.SetActive(true);
+            runButton.enabled = false;
+            runButton.image.color = new Color(255f, 255f, 255f, .5f);
+            currentSpeed = runningSpeed;
+            staminaValue -= staminaReturn * Time.deltaTime * 2;
+        }
+        else
+        {
+            runButtonClicked = false;
+        }
+    }
+
+    public void RunButtonClicked()
+    {
+        if (staminaValue == staminaMaxValue) runButtonClicked = !runButtonClicked;
+    }
+
+    void Stamina()
+    {
+        if (staminaValue > staminaMaxValue)
+        {
+            staminaValue = staminaMaxValue;
+            staminaSlider.gameObject.SetActive(false);
+            runButton.enabled = true;
+            runButton.image.color = new Color(255f, 255f, 255f);
+        }
+        staminaSlider.value = staminaValue;
     }
 
     private void Update()
@@ -30,7 +76,16 @@ public class CustomCharacterController : MonoBehaviour
         // Устанавливаем поворот персонажа когда камера поворачивается 
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, mainCamera.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
 
-        Walk();
+        if (runButtonClicked)
+        {
+            Run();
+        }
+        else
+        {
+            Walk();
+        }
+
+        Stamina();
     }
 
     void FixedUpdate()

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CharacterSwitch : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class CharacterSwitch : MonoBehaviour
     public CinemachineVirtualCamera CVC;
     public float timeStart = 15;
     private float timeLeft;
-    public Text timerText;
+    public TextMeshProUGUI timerText;
     public static bool timerRunning = false;
     private float monsterRotationX;
     private float monsterRotationY;

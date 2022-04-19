@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CrystalCounter : MonoBehaviour
 {
     private int totalCrystals = 0;
     public int crystalsToWin = 3;
-    public Text countText;
+    public TextMeshProUGUI countText;
 
     void Start()
     {
